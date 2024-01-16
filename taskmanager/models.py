@@ -9,13 +9,12 @@ class Category(db.Model):
     # 25 is the number of characters that can be put into this column.
     # Here's is 25 character string column
     # nullable means it's not empty or blank
+    tasks = db.relationship("Task", backref="category", cascade="all, delete", lazy=True)
+    # backref - Category references itself but in lwoer case now.
 
     def __repr__(self):
         # __repr__ to represent itself in the form of a string
         return self.category_name
-
-    def __str__(self):
-        return self
 
 
 class Task(db.Model):
@@ -25,4 +24,13 @@ class Task(db.Model):
     task_description = db.Column(db.Text, nullable=False)
     is_urgent = db.Column(db.Boolean, default=False, nullable=False)
     due_date = db.Column(db.Date, nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey(), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey(
+        "cattegory.id", ondelete="CASCADE"), nullable=False)
+    
+    def __repr__(self):
+        # __repr__ to represent itself in the form of a string
+        return "#{0} - Task: {1} | Urgent: {2}".format(
+            self.id, self.task_name, self.is_urgent
+        )
+
+#test test

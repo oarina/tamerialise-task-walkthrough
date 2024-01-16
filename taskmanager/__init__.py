@@ -1,4 +1,4 @@
-from taskmanager import routes
+
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -21,3 +21,6 @@ db = SQLAlchemy(app)
 # below is how it's supposed to be
 # routes file will rely on above app and db to run,
 # if we mention it above - we would get the circular error
+
+
+from taskmanager import routes
