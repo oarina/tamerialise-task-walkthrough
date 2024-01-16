@@ -1,13 +1,14 @@
-
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 if os.path.exists("env.py"):
-    import env
+    import env  # noqa
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
+app.app_context().push()
 
 # The __name__ is a built-in special variable that evaluates
 # the name of the current module.
@@ -21,6 +22,5 @@ db = SQLAlchemy(app)
 # below is how it's supposed to be
 # routes file will rely on above app and db to run,
 # if we mention it above - we would get the circular error
-
 
 from taskmanager import routes
